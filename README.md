@@ -1,19 +1,27 @@
+You're right! Here's the updated **README** with all four main files, including `linear_regression_model.py`.
+
+---
+
 # **README: Linear Regression Model**
 
 ## **Project Overview**
 
-This project implements a simple linear regression algorithm to predict the price of a car based on its mileage. It consists of three main files that handle different parts of the workflow:
+This project implements a simple linear regression algorithm to predict the price of a car based on its mileage. It includes functionality for training the model, estimating prices, and bonus features such as plotting the regression line and calculating model precision.
 
-1. **Training the Model**: Using historical data of mileage and prices to train the model and save its parameters.
-2. **Estimating Prices**: Using the trained model to predict the price of a car given its mileage.
-3. **Data Management**: A utility class that handles the loading and saving of data and model parameters.
+The project consists of four main scripts:
+
+1. **`main_train.py`**: For training the linear regression model.
+2. **`main_estimate.py`**: For estimating the price of a car using a trained model.
+3. **`main_bonus.py`**: For bonus features such as plotting and precision calculation.
+4. **`linear_regression_model.py`**: Implements the core logic for linear regression.
+5. **`data_manager.py`**: A utility class for managing data and saving/loading model parameters.
 
 ---
 
 ## **Files Overview**
 
 ### 1. **`main_train.py`**
-   - **Purpose**: This script trains the linear regression model using provided data and saves the trained parameters for later use.
+   - **Purpose**: Train the linear regression model using provided data and save the trained parameters.
    - **Usage**:
      - Accepts a CSV file containing mileage (`km`) and price (`price`) columns.
      - Trains the model using gradient descent for a specified number of iterations.
@@ -24,26 +32,75 @@ This project implements a simple linear regression algorithm to predict the pric
      - Trains the model and saves the parameters.
    - Command-line interface allows running the training process with customizable parameters.
 
+   **Example Command**:
+   ```bash
+   python main_train.py train --data-file data.csv --model-file model.txt --learning-rate 0.01 --iterations 1000
+   ```
+
 ---
 
 ### 2. **`main_estimate.py`**
-   - **Purpose**: This script loads the pre-trained model and estimates the price of a car given its mileage.
+   - **Purpose**: Use a trained model to estimate the price of a car based on its mileage.
    - **Usage**:
-     - Requires the file containing the trained model parameters.
-     - Accepts a mileage value as input and outputs the predicted price.
+     - Loads trained parameters from a model file.
+     - Accepts a mileage value and outputs the estimated price.
 
    **Functions**:
    - `estimate_price(model_file, mileage)`:
-     - Loads the trained parameters and estimates the price for a given mileage.
-   - Command-line interface allows estimating prices easily via terminal commands.
+     - Loads the model and estimates the price for a given mileage.
+   - Command-line interface allows easy interaction for price estimation.
+
+   **Example Command**:
+   ```bash
+   python main_estimate.py estimate --model-file model.txt --mileage 15000
+   ```
 
 ---
 
-### 3. **`data_manager.py`**
-   - **Purpose**: A utility class that manages loading and saving of data and model parameters.
-   - **Usage**:
-     - Handles reading CSV files with mileage and price data.
-     - Saves and loads model parameters (`theta0` and `theta1`) for use in training and estimation.
+### 3. **`main_bonus.py`**
+   - **Purpose**: Provides bonus features such as plotting the data and regression line, and calculating model precision.
+   - **Bonus Features**:
+     - **Plotting**: Visualize data points and the regression line to evaluate the model.
+     - **Precision Calculation**: Calculate the model's accuracy using Mean Squared Error (MSE).
+
+   **Functions**:
+   - `plot_data_and_regression_line(data_file, model_file)`:
+     - Plots mileage vs price as a scatter plot, with the regression line overlayed.
+   - `calculate_precision(data_file, model_file)`:
+     - Calculates the Mean Squared Error (MSE) to evaluate the model's prediction accuracy.
+
+   **Commands**:
+   - **Plot the Regression Line**:
+     ```bash
+     python main_bonus.py plot --data-file data.csv --model-file model.txt
+     ```
+   - **Calculate Precision**:
+     ```bash
+     python main_bonus.py precision --data-file data.csv --model-file model.txt
+     ```
+
+---
+
+### 4. **`linear_regression_model.py`**
+   - **Purpose**: Implements the core logic for the linear regression algorithm.
+   - **Key Features**:
+     - **Gradient Descent**: Optimizes the model parameters (`theta0` and `theta1`) using the training data.
+     - **Normalization**: Normalizes data to improve numerical stability during training.
+     - **Unnormalization**: Converts normalized parameters back to the original scale after training.
+     - **Prediction**: Predicts prices for a given mileage using trained parameters.
+   - **Functions**:
+     - `train(mileage, price)`: Trains the model using mileage and price data.
+     - `predict(mileage)`: Predicts the price of a car for a given mileage.
+     - `save_model()`: Saves the trained parameters to a file.
+     - `load_model()`: Loads previously saved parameters from a file.
+
+---
+
+### 5. **`data_manager.py`**
+   - **Purpose**: A utility class for managing data and saving/loading model parameters.
+   - **Key Features**:
+     - Handles reading data from CSV files.
+     - Saves and loads model parameters (`theta0` and `theta1`).
    - **Functions**:
      - `load_data(columns: list)`: Reads specified columns from the CSV file.
      - `save_model(theta0, theta1)`: Saves trained model parameters to a file.
@@ -53,102 +110,72 @@ This project implements a simple linear regression algorithm to predict the pric
 
 ## **How to Use**
 
-### **1. Training the Model**
-   To train the linear regression model, use the `main_train.py` script.
-
-   **Command**:
-   ```bash
-   python main_train.py train --data-file <data.csv> --model-file <model.txt> --learning-rate <learning_rate> --iterations <iterations>
-   ```
-
-   **Arguments**:
-   - `--data-file`: Path to the CSV file containing mileage and price data (required).
-   - `--model-file`: Path to save the trained model parameters (required).
-   - `--learning-rate`: Learning rate for gradient descent (default: `0.1`).
-   - `--iterations`: Number of iterations for gradient descent (default: `1000`).
-
-   **Example**:
+### **1. Train the Model**
+   To train the linear regression model:
    ```bash
    python main_train.py train --data-file data.csv --model-file model.txt --learning-rate 0.01 --iterations 1000
    ```
 
    **Output**:
-   - The trained model parameters (`theta0` and `theta1`) will be saved in the specified file (e.g., `model.txt`).
+   - The trained model parameters (`theta0` and `theta1`) are saved in `model.txt`.
 
 ---
 
-### **2. Estimating Prices**
-   To estimate the price of a car given its mileage, use the `main_estimate.py` script.
-
-   **Command**:
-   ```bash
-   python main_estimate.py estimate --model-file <model.txt> --mileage <mileage_value>
-   ```
-
-   **Arguments**:
-   - `--model-file`: Path to the file containing trained model parameters (required).
-   - `--mileage`: Mileage of the car to estimate the price for (required).
-
-   **Example**:
+### **2. Estimate the Price**
+   To estimate the price of a car for a given mileage:
    ```bash
    python main_estimate.py estimate --model-file model.txt --mileage 15000
    ```
 
    **Output**:
-   - The estimated price for the specified mileage will be displayed.
+   - Displays the estimated price based on the given mileage.
 
 ---
 
-### **3. Data Format**
-   The data file should be a CSV file containing at least two columns:
-   - **`km`**: The mileage of the car.
-   - **`price`**: The price of the car.
-
-   **Example**:
+### **3. Bonus Features**
+   #### Plot the Data and Regression Line
+   ```bash
+   python main_bonus.py plot --data-file data.csv --model-file model.txt
    ```
-   km,price
-   10000,8000
-   20000,7000
-   30000,6000
+   - Displays a graph with:
+     - Blue scatter points for the data.
+     - Red regression line for the model.
+
+   #### Calculate Model Precision
+   ```bash
+   python main_bonus.py precision --data-file data.csv --model-file model.txt
    ```
+   - Calculates and displays the Mean Squared Error (MSE) of the model.
 
 ---
 
-## **Project Workflow**
+## **Data Format**
 
-1. **Prepare Data**:
-   - Create a CSV file with mileage and price data.
+The data file should be a CSV file containing at least two columns:
+- **`km`**: The mileage of the car.
+- **`price`**: The price of the car.
 
-2. **Train the Model**:
-   - Use `main_train.py` to train the model with the prepared data.
-
-3. **Estimate Prices**:
-   - Use `main_estimate.py` with the trained model to estimate the price of a car given its mileage.
+**Example**:
+```
+km,price
+10000,8000
+20000,7000
+30000,6000
+```
 
 ---
 
-## **Example Workflow**
+## **Project Structure**
 
-### **Training**
-```bash
-python main_train.py train --data-file data.csv --model-file model.txt --learning-rate 0.01 --iterations 1000
 ```
-- Output:
-  ```
-  2024-11-28 17:30:00,123 - LinearRegressionModel - INFO - Starting training...
-  2024-11-28 17:31:00,456 - LinearRegressionModel - INFO - Training completed: theta0=5000.50, theta1=-20.30
-  Model training completed and saved successfully.
-  ```
-
-### **Estimating Prices**
-```bash
-python main_estimate.py estimate --model-file model.txt --mileage 15000
+├── main_train.py            # Script for training the model
+├── main_estimate.py         # Script for estimating prices
+├── main_bonus.py            # Script for bonus features (plotting and precision)
+├── data_manager.py          # Utility class for managing data
+├── linear_regression_model.py # Core logic for linear regression
+├── data.csv                 # Example dataset (mileage and price)
+├── model.txt                # Saved model parameters after training
 ```
-- Output:
-  ```
-  2024-11-28 17:35:00,789 - LinearRegressionModel - INFO - Predicted price for mileage 15000 km: 3000.00
-  Estimated price for mileage 15000 km: 3000.00
-  ```
 
 ---
 
@@ -156,30 +183,35 @@ python main_estimate.py estimate --model-file model.txt --mileage 15000
 
 - Python 3.x
 - Required packages:
-  - `logging`
-  - `argparse`
-  - Any custom utilities (`data_manager.py`, `linear_regression_model.py`).
+  - `matplotlib` (for plotting in `main_bonus.py`).
 
----
-
-## **Project Structure**
-
-```
-├── main_train.py        # Script to train the model
-├── main_estimate.py     # Script to estimate prices
-├── data_manager.py      # Handles loading and saving of data and model parameters
-├── linear_regression_model.py # The Linear Regression implementation
-├── data.csv             # Example data (mileage and price)
-├── model.txt            # Saved model parameters after training
+Install dependencies using:
+```bash
+pip install matplotlib
 ```
 
 ---
 
-## **Future Improvements**
-- Add support for more features (e.g., multiple independent variables).
-- Implement error metrics like Mean Squared Error (MSE) for evaluation.
-- Add unit tests for each module.
+## **Example Workflow**
+
+### **Step 1: Train the Model**
+```bash
+python main_train.py train --data-file data.csv --model-file model.txt --learning-rate 0.01 --iterations 1000
+```
+
+### **Step 2: Estimate the Price**
+```bash
+python main_estimate.py estimate --model-file model.txt --mileage 15000
+```
+
+### **Step 3: Bonus Features**
+- Plot the Data and Regression Line:
+  ```bash
+  python main_bonus.py plot --data-file data.csv --model-file model.txt
+  ```
+- Calculate Model Precision:
+  ```bash
+  python main_bonus.py precision --data-file data.csv --model-file model.txt
+  ```
 
 ---
-
-Let me know if you'd like any further refinements or additions!

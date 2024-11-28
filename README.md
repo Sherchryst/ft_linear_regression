@@ -1,7 +1,3 @@
-You're right! Here's the updated **README** with all four main files, including `linear_regression_model.py`.
-
----
-
 # **README: Linear Regression Model**
 
 ## **Project Overview**
@@ -213,5 +209,3 @@ python main_estimate.py estimate --model-file model.txt --mileage 15000
   ```bash
   python main_bonus.py precision --data-file data.csv --model-file model.txt
   ```
-
----
